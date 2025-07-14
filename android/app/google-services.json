@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "872853118639",
+    "project_id": "spending-management-c955a",
+    "storage_bucket": "spending-management-c955a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:872853118639:android:b20670b942765deabf3e5a",
+        "android_client_info": {
+          "package_name": "com.example.spending_management"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "872853118639-bmjshjrq6eoa95a58ns2p62fr0ffh6mo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.spending_management",
+            "certificate_hash": "8920340c1d13299d6a8783da68f59f2c60ba8eaa"
+          }
+        },
+        {
+          "client_id": "872853118639-mthh8h3cim613371dfrk54dlioe676u2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.spending_management",
+            "certificate_hash": "70dd73f0551eaf9237676467f332f605535d9a10"
+          }
+        },
+        {
+          "client_id": "872853118639-qfnjaicibbbq5thv5nri6tqhqu9hh6ta.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.spending_management",
+            "certificate_hash": "50f7987a53789af685755ddfe89bff500f130f56"
+          }
+        },
+        {
+          "client_id": "872853118639-47jr9sf57acbate6ausoc5r58f5q17jm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDRJKEc47u4Vu39SBJLRSjmItnZH3mrGzU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "872853118639-47jr9sf57acbate6ausoc5r58f5q17jm.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "872853118639-mjt0vcq0nq37obrm9p31pb07ugdv51m5.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.spendingManagement"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
