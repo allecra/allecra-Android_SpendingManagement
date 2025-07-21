@@ -30,7 +30,7 @@ void main() async {
   language = prefs.getInt('language');
   isDark = prefs.getBool("isDark") ?? false;
   isFirstStart = prefs.getBool("firstStart") ?? true;
-  loginMethod = prefs.getBool("login") ?? false;
+  loginMethod = prefs.getBool("login nha") ?? false;
   runApp(const MyApp());
 }
 
