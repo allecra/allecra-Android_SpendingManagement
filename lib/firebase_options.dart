@@ -27,10 +27,7 @@ class DefaultFirebaseOptions {
       case TargetPlatform.macOS:
         return macos;
       case TargetPlatform.windows:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for windows - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return windows;
       case TargetPlatform.linux:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for linux - '
@@ -44,31 +41,33 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyDAu-vLGoFQfz9p52UEMv9JPqRTYrgaZaA',
-    appId: '1:872853118639:web:8ef70441291e0b8abf3e5a',
-    messagingSenderId: '872853118639',
-    projectId: 'spending-management-c955a',
-    authDomain: 'spending-management-c955a.firebaseapp.com',
-    storageBucket: 'spending-management-c955a.appspot.com',
-    measurementId: 'G-048LET1D62',
+    apiKey: 'AIzaSyCKHvMhto9E_PP98yzU3eCnmvO3ITR4Evs',
+    appId: '1:5702426781:web:9fee868970c08918e53474',
+    messagingSenderId: '5702426781',
+    projectId: 'spending-management-96554',
+    authDomain: 'spending-management-96554.firebaseapp.com',
+    databaseURL: 'https://spending-management-96554-default-rtdb.firebaseio.com',
+    storageBucket: 'spending-management-96554.firebasestorage.app',
+    measurementId: 'G-K4CE1Q753H',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDRJKEc47u4Vu39SBJLRSjmItnZH3mrGzU',
-    appId: '1:872853118639:android:b20670b942765deabf3e5a',
-    messagingSenderId: '872853118639',
-    projectId: 'spending-management-c955a',
-    storageBucket: 'spending-management-c955a.appspot.com',
+    apiKey: 'AIzaSyAR8cxo6_43Xi0oBcjYvHimeWGUZnIOQqM',
+    appId: '1:5702426781:android:1126676c1663820fe53474',
+    messagingSenderId: '5702426781',
+    projectId: 'spending-management-96554',
+    databaseURL: 'https://spending-management-96554-default-rtdb.firebaseio.com',
+    storageBucket: 'spending-management-96554.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyAfA-M9OJpRHZQ_k2SdX-JR_bedORPcKQI',
-    appId: '1:872853118639:ios:29bce0c09c12eb4ebf3e5a',
-    messagingSenderId: '872853118639',
-    projectId: 'spending-management-c955a',
-    storageBucket: 'spending-management-c955a.appspot.com',
-    iosClientId: '872853118639-mjt0vcq0nq37obrm9p31pb07ugdv51m5.apps.googleusercontent.com',
-    iosBundleId: 'com.example.spendingManagement',
+    apiKey: 'AIzaSyAnpvvUtG_whef4RhqtxUjjbRDmJnZetV0',
+    appId: '1:5702426781:ios:8319f6f29e9ce66fe53474',
+    messagingSenderId: '5702426781',
+    projectId: 'spending-management-96554',
+    databaseURL: 'https://spending-management-96554-default-rtdb.firebaseio.com',
+    storageBucket: 'spending-management-96554.firebasestorage.app',
+    iosBundleId: 'com.example.dume',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
@@ -80,4 +79,16 @@ class DefaultFirebaseOptions {
     iosClientId: '872853118639-mjt0vcq0nq37obrm9p31pb07ugdv51m5.apps.googleusercontent.com',
     iosBundleId: 'com.example.spendingManagement',
   );
+
+  static const FirebaseOptions windows = FirebaseOptions(
+    apiKey: 'AIzaSyCKHvMhto9E_PP98yzU3eCnmvO3ITR4Evs',
+    appId: '1:5702426781:web:61dfa61565822e88e53474',
+    messagingSenderId: '5702426781',
+    projectId: 'spending-management-96554',
+    authDomain: 'spending-management-96554.firebaseapp.com',
+    databaseURL: 'https://spending-management-96554-default-rtdb.firebaseio.com',
+    storageBucket: 'spending-management-96554.firebasestorage.app',
+    measurementId: 'G-YDW2J6MF3Z',
+  );
+
 }

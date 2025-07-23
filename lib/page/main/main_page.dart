@@ -54,7 +54,7 @@ class _MainPageState extends State<MainPage> {
         },
         child: Icon(
           Icons.add_rounded,
-          color: Theme.of(context).colorScheme.background,
+          color: Theme.of(context).colorScheme.surface,
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,

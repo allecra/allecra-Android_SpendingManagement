@@ -48,7 +48,7 @@ class InputText extends StatelessWidget {
         hintStyle: AppStyles.p,
         filled: true,
         errorText: error,
-        fillColor: Theme.of(context).colorScheme.background,
+        fillColor: Theme.of(context).colorScheme.surface,
         hintText: hint,
         contentPadding: const EdgeInsets.all(20),
       ),

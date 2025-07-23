@@ -274,11 +274,11 @@ class _InputSpendingState extends State<InputSpending> {
               padding: const EdgeInsets.all(20),
               child: ElevatedButton(
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.black54),
-                  padding: MaterialStateProperty.all(
+                  backgroundColor: WidgetStateProperty.all(Colors.black54),
+                  padding: WidgetStateProperty.all(
                     const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                   ),
-                  textStyle: MaterialStateProperty.all(
+                  textStyle: WidgetStateProperty.all(
                     const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                 ),
