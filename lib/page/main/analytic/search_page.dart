@@ -36,7 +36,9 @@ class _SearchPageState extends State<SearchPage> {
     if (!AppLocalizations.of(context)
         .translate(listType[spending.type]["title"]!)
         .toUpperCase()
-        .contains(query!.toUpperCase())) return false;
+        .contains(query!.toUpperCase())) {
+      return false;
+    }
 
     if (filter.chooseIndex[0] == 1 && spending.money.abs() < filter.money) {
       return false;
@@ -146,7 +148,7 @@ class _SearchPageState extends State<SearchPage> {
                 if (snapshot.hasData) {
                   final doc = snapshot.requireData;
                   final data = (doc is DocumentSnapshot)
-                      ? doc.data() as Map<String, dynamic>? ?? {}
+                      ? doc.data() ?? {}
                       : {};
                   List<String> list = [];
                   for (var element in data.entries) {

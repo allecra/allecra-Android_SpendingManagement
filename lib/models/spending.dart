@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Spending {
   String? id;
-  int money;
+  int   money;
   int type;
   String? note;
   DateTime dateTime;

@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "5702426781",
+    "firebase_url": "https://spending-management-96554-default-rtdb.firebaseio.com",
+    "project_id": "spending-management-96554",
+    "storage_bucket": "spending-management-96554.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:5702426781:android:1126676c1663820fe53474",
+        "android_client_info": {
+          "package_name": "com.example.dume"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAR8cxo6_43Xi0oBcjYvHimeWGUZnIOQqM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

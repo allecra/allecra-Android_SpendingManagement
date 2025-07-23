@@ -15,6 +15,8 @@ import 'package:spending_management/page/signup/verify/verify_page.dart';
 import 'package:spending_management/setting/bloc/setting_cubit.dart';
 import 'package:spending_management/setting/bloc/setting_state.dart';
 import 'package:spending_management/setting/localization/app_localizations_setup.dart';
+import 'firebase_options.dart';
+
 
 bool loginMethod = false;
 int? language;
@@ -68,7 +70,7 @@ class MyApp extends StatelessWidget {
                   : ThemeData(
                       cardColor: Colors.white,
                       colorScheme:
-                          const ColorScheme.light(background: Colors.white),
+                          const ColorScheme.light(surface: Colors.white),
                       brightness: Brightness.light,
                       primarySwatch: Colors.blue,
                       scaffoldBackgroundColor: AppColors.whisperBackground,
@@ -89,15 +91,21 @@ class MyApp extends StatelessWidget {
                       ),
                       primaryColor: const Color.fromRGBO(242, 243, 247, 1),
                     ),
-              initialRoute: FirebaseAuth.instance.currentUser == null
-                  ? (isFirstStart ? "/" : "/login")
-                  : loginMethod
-                      ? (FirebaseAuth.instance.currentUser!.emailVerified
-                          ? '/main'
-                          : '/verify')
-                      : '/main',
+              home: StreamBuilder<User?>(
+                stream: FirebaseAuth.instance.authStateChanges(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                  if (snapshot.hasData) {
+                    // Đã đăng nhập
+                    return const MainPage();
+                  }
+                  // Chưa đăng nhập
+                  return const LoginPage();
+                },
+              ),
               routes: {
-                '/': (context) => const OnBoardingPage(),
                 '/login': (context) => const LoginPage(),
                 '/home': (context) => const HomePage(),
                 '/main': (context) => const MainPage(),

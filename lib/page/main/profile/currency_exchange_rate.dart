@@ -58,7 +58,7 @@ class _CurrencyExchangeRateState extends State<CurrencyExchangeRate> {
           },
           icon: const Icon(Icons.arrow_back_ios_new_rounded),
         ),
-        backgroundColor: Theme.of(context).colorScheme.background,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         centerTitle: true,
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(80),
@@ -138,7 +138,7 @@ class _CurrencyExchangeRateState extends State<CurrencyExchangeRate> {
             const SizedBox(height: 10),
             Container(
               padding: const EdgeInsets.all(10),
-              color: Theme.of(context).colorScheme.background,
+              color: Theme.of(context).colorScheme.surface,
               child: TextField(
                 controller: _searchController,
                 style: const TextStyle(fontSize: 20),

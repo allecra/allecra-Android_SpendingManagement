@@ -10,7 +10,7 @@ import 'package:screenshot/screenshot.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:spending_management/page/view_spending/view_image.dart';
-import 'package:image_picker/image_picker.dart'; // hoặc package cung cấp XFile
+// hoặc package cung cấp XFile
 
 import '../../constants/function/loading_animation.dart';
 import '../../constants/function/route_function.dart';

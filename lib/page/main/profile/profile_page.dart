@@ -59,179 +59,179 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          children: [
-            StreamBuilder(
-              stream: FirebaseFirestore.instance
-                  .collection("info")
-                  .doc(FirebaseAuth.instance.currentUser!.uid)
-                  .snapshots(),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  myuser.User user =
-                      myuser.User.fromFirebase(snapshot.requireData);
-                  return InfoWidget(user: user);
-                }
-                return const InfoWidget();
-              },
-            ),
-            const SizedBox(height: 10),
-            Expanded(
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 10, 20, 40),
-                  child: Column(
-                    children: [
-                      const SizedBox(height: 10),
-                      settingItem(
-                        text: AppLocalizations.of(context).translate('account'),
-                        action: () {
-                          Navigator.of(context).push(createRoute(
-                            screen: const EditProfilePage(),
-                            begin: const Offset(1, 0),
-                          ));
-                        },
-                        icon: FontAwesomeIcons.solidUser,
-                        color: const Color.fromRGBO(0, 150, 255, 1),
-                      ),
-                      if (loginMethod) const SizedBox(height: 20),
-                      if (loginMethod)
-                        settingItem(
-                          text: AppLocalizations.of(context)
-                              .translate('change_password'),
-                          action: () {
-                            Navigator.of(context).push(createRoute(
-                              screen: const ChangePassword(),
-                              begin: const Offset(1, 0),
-                            ));
-                          },
-                          icon: FontAwesomeIcons.lock,
-                          color: const Color.fromRGBO(233, 116, 81, 1),
-                        ),
-                      const SizedBox(height: 20),
-                      settingItem(
-                        text:
-                            AppLocalizations.of(context).translate('language'),
-                        action: _showBottomSheet,
-                        icon: Icons.translate_outlined,
-                        color: const Color.fromRGBO(218, 165, 32, 1),
-                      ),
-                      const SizedBox(height: 20),
-                      Row(
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              color: Colors.black87,
-                              borderRadius: BorderRadius.circular(90),
-                            ),
-                            padding: const EdgeInsets.all(10),
-                            child: const Icon(
-                              FontAwesomeIcons.solidMoon,
-                              color: Colors.white,
-                            ),
-                          ),
-                          const SizedBox(width: 10),
-                          Text(
-                            AppLocalizations.of(context).translate('dark_mode'),
-                            style: const TextStyle(fontSize: 18),
-                          ),
-                          const Spacer(),
-                          FlutterSwitch(
-                            height: 30,
-                            width: 60,
-                            value: darkMode,
-                            onToggle: (value) async {
-                              BlocProvider.of<SettingCubit>(context)
-                                  .changeTheme();
-                              setState(() => darkMode = value);
-                              final prefs =
-                                  await SharedPreferences.getInstance();
-                              await prefs.setBool('isDark', darkMode);
-                            },
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 20),
-                      settingItem(
-                        text: AppLocalizations.of(context).translate('history'),
-                        action: () {
-                          Navigator.of(context).push(createRoute(
-                            screen: const HistoryPage(),
-                            begin: const Offset(1, 0),
-                          ));
-                        },
-                        icon: Icons.history_rounded,
-                        color: const Color.fromRGBO(121, 189, 161, 1),
-                      ),
-                      const SizedBox(height: 20),
-                      settingItem(
-                        text:
-                            "${AppLocalizations.of(context).translate('export')} CSV",
-                        action: () async {
-                          loadingAnimation(context);
-                          await exportCSV();
-                          if (!mounted) return;
-                          Navigator.pop(context);
-                        },
-                        icon: Icons.archive_outlined,
-                        color: const Color.fromRGBO(137, 207, 240, 1),
-                      ),
-                      const SizedBox(height: 20),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              StreamBuilder(
+                stream: FirebaseFirestore.instance
+                    .collection("info")
+                    .doc(FirebaseAuth.instance.currentUser!.uid)
+                    .snapshots(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    var data = snapshot.requireData.data();
+                    if (data != null) {
+                      myuser.User user = myuser.User.fromFirebase(snapshot.requireData);
+                      return InfoWidget(user: user);
+                    }
+                  }
+                  return const InfoWidget();
+                },
+              ),
+              const SizedBox(height: 10),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 10, 20, 40),
+                child: Column(
+                  children: [
+                    const SizedBox(height: 10),
+                    settingItem(
+                      text: AppLocalizations.of(context).translate('account'),
+                      action: () {
+                        Navigator.of(context).push(createRoute(
+                          screen: const EditProfilePage(),
+                          begin: const Offset(1, 0),
+                        ));
+                      },
+                      icon: FontAwesomeIcons.solidUser,
+                      color: const Color.fromRGBO(0, 150, 255, 1),
+                    ),
+                    if (loginMethod) const SizedBox(height: 20),
+                    if (loginMethod)
                       settingItem(
                         text: AppLocalizations.of(context)
-                            .translate('currency_exchange_rate'),
-                        action: () async {
-                          Navigator.of(context).push(createRoute(
-                            screen: const CurrencyExchangeRate(),
-                            begin: const Offset(1, 0),
-                          ));
-                        },
-                        icon: Icons.attach_money_rounded,
-                        color: const Color.fromRGBO(255, 192, 0, 1),
-                      ),
-                      const SizedBox(height: 20),
-                      settingItem(
-                        text: AppLocalizations.of(context).translate('about'),
+                            .translate('change_password'),
                         action: () {
                           Navigator.of(context).push(createRoute(
-                            screen: const AboutPage(),
+                            screen: const ChangePassword(),
                             begin: const Offset(1, 0),
                           ));
                         },
-                        icon: FontAwesomeIcons.circleInfo,
-                        color: const Color.fromRGBO(79, 121, 66, 1),
+                        icon: FontAwesomeIcons.lock,
+                        color: const Color.fromRGBO(233, 116, 81, 1),
                       ),
-                      const SizedBox(height: 40),
-                      SizedBox(
-                        width: double.infinity,
-                        height: 50,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColors.buttonLogin,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30),
-                            ),
+                    const SizedBox(height: 20),
+                    settingItem(
+                      text:
+                          AppLocalizations.of(context).translate('language'),
+                      action: _showBottomSheet,
+                      icon: Icons.translate_outlined,
+                      color: const Color.fromRGBO(218, 165, 32, 1),
+                    ),
+                    const SizedBox(height: 20),
+                    Row(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.black87,
+                            borderRadius: BorderRadius.circular(90),
                           ),
-                          onPressed: () async {
-                            await FirebaseAuth.instance.signOut();
-                            await GoogleSignIn().signOut();
-                            await FacebookAuth.instance.logOut();
-                            if (!mounted) return;
-                            Navigator.pushNamedAndRemoveUntil(
-                                context, '/login', (route) => false);
-                          },
-                          child: Text(
-                            AppLocalizations.of(context).translate('logout'),
-                            style: AppStyles.p,
+                          padding: const EdgeInsets.all(10),
+                          child: const Icon(
+                            FontAwesomeIcons.solidMoon,
+                            color: Colors.white,
                           ),
                         ),
+                        const SizedBox(width: 10),
+                        Text(
+                          AppLocalizations.of(context).translate('dark_mode'),
+                          style: const TextStyle(fontSize: 18),
+                        ),
+                        const Spacer(),
+                        FlutterSwitch(
+                          height: 30,
+                          width: 60,
+                          value: darkMode,
+                          onToggle: (value) async {
+                            BlocProvider.of<SettingCubit>(context)
+                                .changeTheme();
+                            setState(() => darkMode = value);
+                            final prefs =
+                                await SharedPreferences.getInstance();
+                            await prefs.setBool('isDark', darkMode);
+                          },
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+                    settingItem(
+                      text: AppLocalizations.of(context).translate('history'),
+                      action: () {
+                        Navigator.of(context).push(createRoute(
+                          screen: const HistoryPage(),
+                          begin: const Offset(1, 0),
+                        ));
+                      },
+                      icon: Icons.history_rounded,
+                      color: const Color.fromRGBO(121, 189, 161, 1),
+                    ),
+                    const SizedBox(height: 20),
+                    settingItem(
+                      text:
+                          "${AppLocalizations.of(context).translate('export')} CSV",
+                      action: () async {
+                        loadingAnimation(context);
+                        await exportCSV();
+                        if (!mounted) return;
+                        Navigator.pop(context);
+                      },
+                      icon: Icons.archive_outlined,
+                      color: const Color.fromRGBO(137, 207, 240, 1),
+                    ),
+                    const SizedBox(height: 20),
+                    settingItem(
+                      text: AppLocalizations.of(context)
+                          .translate('currency_exchange_rate'),
+                      action: () async {
+                        Navigator.of(context).push(createRoute(
+                          screen: const CurrencyExchangeRate(),
+                          begin: const Offset(1, 0),
+                        ));
+                      },
+                      icon: Icons.attach_money_rounded,
+                      color: const Color.fromRGBO(255, 192, 0, 1),
+                    ),
+                    const SizedBox(height: 20),
+                    settingItem(
+                      text: AppLocalizations.of(context).translate('about'),
+                      action: () {
+                        Navigator.of(context).push(createRoute(
+                          screen: const AboutPage(),
+                          begin: const Offset(1, 0),
+                        ));
+                      },
+                      icon: FontAwesomeIcons.circleInfo,
+                      color: const Color.fromRGBO(79, 121, 66, 1),
+                    ),
+                    const SizedBox(height: 40),
+                    SizedBox(
+                      width: double.infinity,
+                      height: 50,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColors.buttonLogin,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                        ),
+                        onPressed: () async {
+                          await FirebaseAuth.instance.signOut();
+                          await GoogleSignIn().signOut();
+                          await FacebookAuth.instance.logOut();
+                          if (!mounted) return;
+                          Navigator.pushNamedAndRemoveUntil(
+                              context, '/login', (route) => false);
+                        },
+                        child: Text(
+                          AppLocalizations.of(context).translate('logout'),
+                          style: AppStyles.p,
+                        ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -328,9 +328,14 @@ class _ProfilePageState extends State<ProfilePage> {
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .get()
         .then((value) async {
-      var data = value.data() as Map<String, dynamic>;
+      var data = value.data();
+      if (data == null) {
+        // Nếu không có dữ liệu thì return luôn
+        return;
+      }
+      Map<String, dynamic> mapData = data as Map<String, dynamic>;
       List<String> listData = [];
-      for (var entry in data.entries) {
+      for (var entry in mapData.entries) {
         listData.addAll(
             (entry.value as List<dynamic>).map((e) => e.toString()).toList());
       }

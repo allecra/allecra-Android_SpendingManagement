@@ -24,7 +24,7 @@ class APIService {
     return {};
   }
 
-  // https://gist.githubusercontent.com/ngoctienUIT/e81b1119d12c6dadfa3b7902a80e0928/raw/f621703926fc13be4f618fb4a058d0454177cceb/countries.json
+  // https://gist.githubusercontent.com/allecra/abad9b167b51ff3291a18e3f3708b193/raw/fe1cd9f33ce5efda0678704917219c1da63560bf/countries.json
 
   static Future<List<Map<String, dynamic>>> parseCountry(
       String responseBody) async {
@@ -49,7 +49,7 @@ class APIService {
     try {
       var url = Uri.https(
         'gist.githubusercontent.com',
-        '/ngoctienUIT/e81b1119d12c6dadfa3b7902a80e0928/raw/f621703926fc13be4f618fb4a058d0454177cceb/countries.json',
+        '/allecra/abad9b167b51ff3291a18e3f3708b193/raw/fe1cd9f33ce5efda0678704917219c1da63560bf/countries.json',
         {'q': '{https}'},
       );
       final response = await http.get(url);
@@ -62,8 +62,7 @@ class APIService {
     return [];
   }
 
-  // https://gist.githubusercontent.com/ngoctienUIT/dcc4088614d668816352eb1b2b16a5c8/raw/28d6e58f99ba242b7f798a27877e2afce75a5dca/currency-symbols.json
-
+  // https://gist.githubusercontent.com/allecra/abad9b167b51ff3291a18e3f3708b193/raw/fe1cd9f33ce5efda0678704917219c1da63560bf/countries.json
   static List<Map<String, dynamic>> parseSymbolCurrency(String responseBody) {
     var data = json.decode(responseBody) as List<dynamic>;
     List<Map<String, dynamic>> list =
@@ -75,7 +74,7 @@ class APIService {
     try {
       var url = Uri.https(
         'gist.githubusercontent.com',
-        'ngoctienUIT/dcc4088614d668816352eb1b2b16a5c8/raw/28d6e58f99ba242b7f798a27877e2afce75a5dca/currency-symbols.json',
+        '/allecra/abad9b167b51ff3291a18e3f3708b193/raw/fe1cd9f33ce5efda0678704917219c1da63560bf/countries.json',
         {'q': '{https}'},
       );
       final response = await http.get(url);
