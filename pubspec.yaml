@@ -67,9 +67,9 @@ dependencies:
   path_provider: ^2.0.11
   flutter_native_splash: ^2.3.0
   csv: ^5.0.1
-  http: ^1.0.0
-  html: ^0.15.1
-  win32: ^5.0.0
+  http: ^1.2.1
+  flutter_chat_ui: ^1.6.8
+  flutter_chat_types: ^3.6.2
 
 
 dev_dependencies:

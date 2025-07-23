@@ -10,6 +10,7 @@ import 'package:spending_management/page/main/calendar/calendar_page.dart';
 import 'package:spending_management/page/main/home/home_page.dart';
 import 'package:spending_management/page/main/profile/profile_page.dart';
 import 'package:spending_management/page/main/widget/item_bottom_tab.dart';
+import 'package:spending_management/page/chatbot/chatbot_page.dart';
 
 import '../../setting/localization/app_localizations.dart';
 
@@ -32,100 +33,122 @@ class _MainPageState extends State<MainPage> {
   DateTime? currentBackPressTime;
   final PageStorageBucket bucket = PageStorageBucket();
   XFile? image;
+  Offset chatbotOffset = const Offset(300, 500); // vị trí mặc định
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: WillPopScope(
-        onWillPop: () => onWillPop(
-          action: (now) => currentBackPressTime = now,
-          currentBackPressTime: currentBackPressTime,
-        ),
-        child: PageStorage(
-          bucket: bucket,
-          child: screens[currentTab],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.of(context).push(
-            createRoute(screen: const AddSpendingPage()),
-          );
-        },
-        child: Icon(
-          Icons.add_rounded,
-          color: Theme.of(context).colorScheme.surface,
-        ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      bottomNavigationBar: BottomAppBar(
-        // color: AppColors.whisperBackground,
-        shape: const CircularNotchedRectangle(),
-        notchMargin: 10,
-        child: SizedBox(
-          height: 60,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
+    return Stack(
+      children: [
+        Scaffold(
+          body: WillPopScope(
+            onWillPop: () => onWillPop(
+              action: (now) => currentBackPressTime = now,
+              currentBackPressTime: currentBackPressTime,
+            ),
+            child: PageStorage(
+              bucket: bucket,
+              child: screens[currentTab],
+            ),
+          ),
+          floatingActionButton: FloatingActionButton(
+            heroTag: 'add',
+            onPressed: () {
+              Navigator.of(context).push(
+                createRoute(screen: const AddSpendingPage()),
+              );
+            },
+            child: Icon(
+              Icons.add_rounded,
+              color: Theme.of(context).colorScheme.surface,
+            ),
+          ),
+          floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+          bottomNavigationBar: BottomAppBar(
+            // color: AppColors.whisperBackground,
+            shape: const CircularNotchedRectangle(),
+            notchMargin: 10,
+            child: SizedBox(
+              height: 60,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  itemBottomTab(
-                    text: AppLocalizations.of(context).translate('home'),
-                    index: 0,
-                    current: currentTab,
-                    icon: FontAwesomeIcons.house,
-                    action: () {
-                      setState(() {
-                        currentTab = 0;
-                      });
-                    },
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      itemBottomTab(
+                        text: AppLocalizations.of(context).translate('home'),
+                        index: 0,
+                        current: currentTab,
+                        icon: FontAwesomeIcons.house,
+                        action: () {
+                          setState(() {
+                            currentTab = 0;
+                          });
+                        },
+                      ),
+                      itemBottomTab(
+                        text: AppLocalizations.of(context).translate('calendar'),
+                        index: 1,
+                        current: currentTab,
+                        size: 28,
+                        icon: Icons.calendar_month_outlined,
+                        action: () {
+                          setState(() {
+                            currentTab = 1;
+                          });
+                        },
+                      ),
+                    ],
                   ),
-                  itemBottomTab(
-                    text: AppLocalizations.of(context).translate('calendar'),
-                    index: 1,
-                    current: currentTab,
-                    size: 28,
-                    icon: Icons.calendar_month_outlined,
-                    action: () {
-                      setState(() {
-                        currentTab = 1;
-                      });
-                    },
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      itemBottomTab(
+                        text: AppLocalizations.of(context).translate('analytic'),
+                        index: 2,
+                        current: currentTab,
+                        icon: FontAwesomeIcons.chartPie,
+                        action: () {
+                          setState(() {
+                            currentTab = 2;
+                          });
+                        },
+                      ),
+                      itemBottomTab(
+                        text: AppLocalizations.of(context).translate('account'),
+                        index: 3,
+                        current: currentTab,
+                        icon: currentTab == 3
+                            ? FontAwesomeIcons.userLarge
+                            : FontAwesomeIcons.user,
+                        action: () {
+                          setState(() => currentTab = 3);
+                        },
+                      ),
+                    ],
                   ),
                 ],
               ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  itemBottomTab(
-                    text: AppLocalizations.of(context).translate('analytic'),
-                    index: 2,
-                    current: currentTab,
-                    icon: FontAwesomeIcons.chartPie,
-                    action: () {
-                      setState(() {
-                        currentTab = 2;
-                      });
-                    },
-                  ),
-                  itemBottomTab(
-                    text: AppLocalizations.of(context).translate('account'),
-                    index: 3,
-                    current: currentTab,
-                    icon: currentTab == 3
-                        ? FontAwesomeIcons.userLarge
-                        : FontAwesomeIcons.user,
-                    action: () {
-                      setState(() => currentTab = 3);
-                    },
-                  ),
-                ],
-              ),
-            ],
+            ),
           ),
         ),
-      ),
+        Positioned(
+          top: 40,
+          right: 16,
+          child: FloatingActionButton(
+            heroTag: 'chatbot',
+            mini: true,
+            backgroundColor: Colors.blueAccent,
+            onPressed: () {
+              Navigator.of(context).push(
+                createRoute(screen: const ChatBotPage()),
+              );
+            },
+            child: const Icon(Icons.chat_bubble_outline),
+            tooltip: 'Chatbot hỗ trợ',
+          ),
+        ),
+      ],
     );
   }
 
