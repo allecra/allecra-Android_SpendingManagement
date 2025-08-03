@@ -1,63 +1,146 @@
-# ỨNG DỤNG QUẢN LÝ CHI TIÊU CÁ NHÂN
+# 📱 Dume - Ứng dụng Quản lý Chi tiêu Cá nhân
 
-## 1.1 Thông tin dự án
-- **Tên tiếng Anh:** Personal Expense Management
-- **Tên tiếng Việt:** Quản lý chi tiêu cá nhân
-- **Mã dự án:** PEM
-- **Loại phần mềm:** App
+## 🚀 Tính năng chính
 
-## 1.2 Thành viên tham gia
-| Tên                   | Mã sinh viên | Gmail                  |
-|-----------------------|--------------|------------------------|
-| Nguyễn Thị Thanh Ngân | BIT230287    | nttngan1606@gmail.com  |
-| Nguyễn Thị Tâm        | BIT230372    | tam2632005@gmail.com   |
-| Hoàng Minh Thiện      | BIT230390    | thienkt179@gmail.com   |
+### 👤 **Quản lý tài khoản**
+- ✅ Đăng ký/Đăng nhập với Firebase Authentication
+- ✅ Xác thực email
+- ✅ Quên mật khẩu
+- ✅ Hồ sơ người dùng với avatar, thông tin cá nhân
+- ✅ Đổi mật khẩu
+- ✅ Đa ngôn ngữ (Tiếng Việt/English)
+- ✅ Chế độ tối/sáng
 
----
+### 💰 **Quản lý chi tiêu**
+- ✅ Thêm chi tiêu với hình ảnh, ghi chú, địa điểm
+- ✅ Chia sẻ chi tiêu với bạn bè
+- ✅ Chọn loại chi tiêu (ăn uống, di chuyển, mua sắm...)
+- ✅ Chọn ngày chi tiêu
+- ✅ Sửa/Xóa chi tiêu
+- ✅ Validation chi tiết (giới hạn số tiền, ký tự...)
 
-## 2. Giới thiệu
-Ứng dụng giúp người dùng quản lý chi tiêu cá nhân một cách dễ dàng, trực quan, hỗ trợ thống kê, phân loại thu chi, và lưu trữ dữ liệu an toàn trên Firebase.
+### 📊 **Phân tích & Báo cáo**
+- ✅ Biểu đồ cột theo ngày
+- ✅ Biểu đồ tròn theo loại chi tiêu
+- ✅ Tổng hợp chi tiêu theo tháng
+- ✅ So sánh với hạn mức
+- ✅ Xuất dữ liệu CSV
 
-### Tính năng chính
-- Đăng ký, đăng nhập bằng Email/Password (Firebase Auth)
-- Quản lý thu chi, phân loại chi tiêu
-- Thống kê, biểu đồ chi tiêu theo ngày/tháng/năm
-- Lưu trữ dữ liệu trên Firebase Firestore
-- Hỗ trợ đa ngôn ngữ (Tiếng Việt, Tiếng Anh)
-- Giao diện hiện đại, dễ sử dụng
+### 📅 **Lịch & Tìm kiếm**
+- ✅ Lịch chi tiêu theo ngày
+- ✅ Tìm kiếm chi tiêu theo:
+  - Ngày cụ thể
+  - Tháng
+  - Loại chi tiêu
+  - Từ khóa
+- ✅ Lọc và sắp xếp kết quả
 
----
+### 🤖 **AI Chatbot hỗ trợ**
+- ✅ Tích hợp Google Gemini AI
+- ✅ Truy cập dữ liệu chi tiêu thực tế
+- ✅ Tư vấn tài chính cá nhân
+- ✅ Nhắc nhở hạn mức
+- ✅ Phân tích xu hướng chi tiêu
 
-## 3. Hướng dẫn cài đặt & sử dụng
+### 💳 **Quản lý ví & Hạn mức**
+- ✅ Thiết lập hạn mức chi tiêu hàng tháng
+- ✅ Theo dõi thu nhập
+- ✅ Cảnh báo vượt hạn mức
+- ✅ Thống kê thu chi
 
-### 3.1 Clone project
-```sh
-git clone https://github.com/allecra/Android_SpendingManagement.git
-cd Android_SpendingManagement
+### 🔔 **Thông báo & UX**
+- ✅ Toast/SnackBar cho tất cả thao tác
+- ✅ Thông báo chào mừng khi mở app
+- ✅ Loading animation
+- ✅ Responsive design
+- ✅ Dark/Light theme
+
+## 🗄️ Cấu trúc Database (Firestore)
+
+### **Collection: `spending`**
+```json
+{
+  "id": "string",
+  "date": "timestamp", 
+  "friends": ["array"],
+  "image": "string",
+  "location": "string",
+  "money": "number",
+  "note": "string", 
+  "type": "string",
+  "fullname": "string"
+}
 ```
 
-### 3.2 Cài đặt dependencies
-```sh
-flutter pub get
+### **Collection: `info`**
+```json
+{
+  "id": "string",
+  "name": "string",
+  "money": "number",
+  "avatar": "string", 
+  "gender": "boolean",
+  "birthday": "string",
+  "userId": "string"
+}
 ```
 
-### 3.3 Cấu hình Firebase
-- Thay file `android/app/google-services.json` và `ios/Runner/GoogleService-Info.plist` bằng file của project Firebase của bạn (nếu muốn dùng Firebase riêng).
-- Đảm bảo đã bật Authentication (Email/Password) và tạo Firestore Database trên Firebase Console.
-
-### 3.4 Chạy app
-```sh
-flutter run
+### **Collection: `wallet`**
+```json
+{
+  "userId": "string",
+  "01_2024": "number",  // Format: MM_YYYY
+  "02_2024": "number",
+  // ... các tháng khác
+}
 ```
 
----
+### **Collection: `data`**
+```json
+{
+  "userId": "string", 
+  "01_2024": ["spending_id_1", "spending_id_2"],  // List ID spending theo tháng
+  "02_2024": ["spending_id_3", "spending_id_4"],
+  // ... các tháng khác
+}
+```
 
-## 4. Thông tin thêm
-- Project sử dụng Flutter, Firebase, Bloc, Firestore, v.v.
-- Nếu gặp lỗi về version package, hãy kiểm tra lại các ràng buộc trong `pubspec.yaml` và cập nhật cho phù hợp với version Flutter bạn đang dùng.
+## 🔧 Công nghệ sử dụng
 
----
+- **Frontend**: Flutter 3.x
+- **Backend**: Firebase
+  - Authentication
+  - Firestore Database  
+  - Storage (hình ảnh)
+- **AI**: Google Gemini API
+- **State Management**: BLoC Pattern
+- **Localization**: Flutter Intl
+- **UI/UX**: Material Design 3
 
-## 5. Liên hệ
-- Tác giả: Nhóm PEM
-- Github: [allecra/Android_SpendingManagement](https://github.com/allecra/Android_SpendingManagement)
+## 📱 Màn hình chính
+
+1. **Trang chủ**: Tổng quan chi tiêu ngày hôm nay
+2. **Lịch**: Xem chi tiêu theo lịch + nút tìm kiếm
+3. **Phân tích**: Biểu đồ và báo cáo chi tiết
+4. **Tài khoản**: Quản lý hồ sơ và cài đặt
+
+## 🎯 Điểm nổi bật
+
+- ✅ **Bảo mật**: Firebase Authentication + Security Rules
+- ✅ **Real-time**: Cập nhật dữ liệu theo thời gian thực
+- ✅ **AI-powered**: Chatbot thông minh với dữ liệu thực
+- ✅ **User-friendly**: Giao diện đẹp, dễ sử dụng
+- ✅ **Multi-language**: Hỗ trợ đa ngôn ngữ
+- ✅ **Offline-ready**: Cache dữ liệu local
+- ✅ **Responsive**: Tương thích nhiều kích thước màn hình
+
+## 🚀 Cài đặt & Chạy
+
+1. Clone repository
+2. `flutter pub get`
+3. Cấu hình Firebase
+4. `flutter run`
+
+## 📄 License
+
+MIT License
