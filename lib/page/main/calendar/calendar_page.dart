@@ -5,6 +5,8 @@ import 'package:spending_management/models/spending.dart';
 import 'package:spending_management/page/main/calendar/widget/build_spending.dart';
 import 'package:spending_management/page/main/calendar/widget/custom_table_calendar.dart';
 import 'package:spending_management/page/main/calendar/widget/total_spending.dart';
+import 'package:spending_management/page/main/analytic/search_page.dart';
+import 'package:spending_management/constants/function/route_function.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -64,59 +66,78 @@ class _CalendarPageState extends State<CalendarPage> {
                             _currentSpendingList = spendingList;
                           }
 
-                          return Column(
+                          return Stack(
                             children: [
-                              CustomTableCalendar(
-                                  focusedDay: _focusedDay,
-                                  selectedDay: _selectedDay,
-                                  dataSpending: dataSpending,
-                                  onPageChanged: (focusedDay) =>
-                                      setState(() => _focusedDay = focusedDay),
-                                  onDaySelected: (selectedDay, focusedDay) {
-                                    setState(() {
-                                      _focusedDay = focusedDay;
-                                      _selectedDay = selectedDay;
-                                    });
-                                  }),
-                              const SizedBox(height: 5),
-                              Expanded(
-                                child: SingleChildScrollView(
-                                  child: Column(
-                                    children: [
-                                      if (_currentSpendingList!.isNotEmpty)
-                                        TotalSpending(
-                                            list: _currentSpendingList),
-                                      BuildSpending(
-                                        spendingList: _currentSpendingList,
-                                        date: _selectedDay,
-                                        change: (spending) async {
-                                          try {
-                                            spending.image = await FirebaseStorage
-                                                .instance
-                                                .ref()
-                                                .child(
-                                                "spending/${spending.id}.png")
-                                                .getDownloadURL();
-                                          } catch (_) {}
+                              Column(
+                                children: [
+                                  CustomTableCalendar(
+                                      focusedDay: _focusedDay,
+                                      selectedDay: _selectedDay,
+                                      dataSpending: dataSpending,
+                                      onPageChanged: (focusedDay) =>
+                                          setState(() => _focusedDay = focusedDay),
+                                      onDaySelected: (selectedDay, focusedDay) {
+                                        setState(() {
+                                          _focusedDay = focusedDay;
+                                          _selectedDay = selectedDay;
+                                        });
+                                      }),
+                                  const SizedBox(height: 5),
+                                  Expanded(
+                                    child: SingleChildScrollView(
+                                      child: Column(
+                                        children: [
+                                          if (_currentSpendingList!.isNotEmpty)
+                                            TotalSpending(
+                                                list: _currentSpendingList),
+                                          BuildSpending(
+                                            spendingList: _currentSpendingList,
+                                            date: _selectedDay,
+                                            change: (spending) async {
+                                              try {
+                                                spending.image = await FirebaseStorage
+                                                    .instance
+                                                    .ref()
+                                                    .child(
+                                                    "spending/${spending.id}.png")
+                                                    .getDownloadURL();
+                                              } catch (_) {}
 
-                                          setState(() {
-                                            if (isSameDay(spending.dateTime,
-                                                _selectedDay)) {
-                                              _currentSpendingList![findIndex(
-                                                  _currentSpendingList!,
-                                                  spending.id!)] = spending;
-                                            } else {
-                                              _currentSpendingList!.removeWhere(
-                                                      (element) =>
-                                                  element.id!.compareTo(
-                                                      spending.id!) ==
-                                                      0);
-                                            }
-                                          });
-                                        },
-                                      )
-                                    ],
+                                              setState(() {
+                                                if (isSameDay(spending.dateTime,
+                                                    _selectedDay)) {
+                                                  _currentSpendingList![findIndex(
+                                                      _currentSpendingList!,
+                                                      spending.id!)] = spending;
+                                                } else {
+                                                  _currentSpendingList!.removeWhere(
+                                                          (element) =>
+                                                      element.id!.compareTo(
+                                                          spending.id!) ==
+                                                          0);
+                                                }
+                                              });
+                                            },
+                                          )
+                                        ],
+                                      ),
+                                    ),
                                   ),
+                                ],
+                              ),
+                              Positioned(
+                                bottom: 20,
+                                right: 20,
+                                child: FloatingActionButton(
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => SearchPage(),
+                                      ),
+                                    );
+                                  },
+                                  child: const Icon(Icons.search),
                                 ),
                               ),
                             ],

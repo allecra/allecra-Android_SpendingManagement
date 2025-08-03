@@ -8,6 +8,7 @@ import 'package:spending_management/page/login/bloc/login_event.dart';
 import 'package:spending_management/page/login/bloc/login_state.dart';
 import 'package:spending_management/models/user.dart' as myuser;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   String _status = "";
@@ -20,6 +21,11 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         SharedPreferences.getInstance().then((value) {
           value.setBool("login", true);
         });
+        Fluttertoast.showToast(
+          msg: 'Đăng nhập thành công!',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.TOP,
+        );
         emit(LoginSuccessState(social: Social.email));
       } else {
         emit(LoginErrorState(status: _status));

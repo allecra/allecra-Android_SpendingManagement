@@ -6,6 +6,7 @@ import 'package:spending_management/constants/function/list_categories.dart';
 import 'package:spending_management/controls/spending_firebase.dart';
 import 'package:spending_management/models/spending.dart';
 import 'package:spending_management/setting/localization/app_localizations.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class InputIncome extends StatefulWidget {
   const InputIncome({Key? key}) : super(key: key);
@@ -281,7 +282,7 @@ class _InputIncomeState extends State<InputIncome> {
                     await SpendingFirebase.addSpending(
                       Spending(
                         money: int.parse(_moneyController.text
-                            .replaceAll(RegExp(r'[^0-9]'), '')),
+                            .replaceAll(RegExp(r'[^0-9-]'), '')),
                         note: _noteController.text,
                         type: activeCategory,
                         dateTime: dateTime,
@@ -289,6 +290,13 @@ class _InputIncomeState extends State<InputIncome> {
                     );
                     if (!mounted) return;
                     Navigator.pop(context);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(AppLocalizations.of(context).translate('add_income_success') ?? 'Thêm thu nhập thành công!'),
+                        duration: const Duration(seconds: 2),
+                        backgroundColor: Colors.green,
+                      ),
+                    );
                   }
                 },
                 style: ButtonStyle(

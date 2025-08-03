@@ -92,7 +92,7 @@ class _EditSpendingPageState extends State<EditSpendingPage> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Theme.of(context).colorScheme.background,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         title: Text(AppLocalizations.of(context).translate('edit_spending')),
         centerTitle: true,
         actions: [
@@ -398,6 +398,14 @@ class _EditSpendingPageState extends State<EditSpendingPage> {
       if (!mounted) return;
       Navigator.pop(context);
       Navigator.pop(context);
+      print('DEBUG: Sửa chi tiêu thành công, hiện thông báo');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(AppLocalizations.of(context).translate('edit_spending_success') ?? 'Sửa chi tiêu thành công!'),
+          duration: const Duration(seconds: 2),
+          backgroundColor: Colors.blue,
+        ),
+      );
     } else if (type == null) {
       Fluttertoast.showToast(
           msg: AppLocalizations.of(context).translate('please_select_type'));

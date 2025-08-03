@@ -5,6 +5,7 @@ import 'package:spending_management/page/signup/bloc/signup_event.dart';
 import 'package:spending_management/page/signup/bloc/singup_state.dart';
 import 'package:spending_management/models/user.dart' as myuser;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class SignupBloc extends Bloc<SignupEvent, SignupState> {
   String _status = "";
@@ -18,6 +19,11 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
           value.setBool("login", true);
         });
         await initInfoUser(event.user);
+        Fluttertoast.showToast(
+          msg: 'Đăng ký thành công!',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.TOP,
+        );
         emit(SignupSuccessState());
       } else {
         emit(SignupErrorState(status: _status));

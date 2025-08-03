@@ -16,6 +16,7 @@ import 'package:spending_management/setting/bloc/setting_cubit.dart';
 import 'package:spending_management/setting/bloc/setting_state.dart';
 import 'package:spending_management/setting/localization/app_localizations_setup.dart';
 import 'firebase_options.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 
 bool loginMethod = false;
@@ -99,6 +100,15 @@ class MyApp extends StatelessWidget {
                   }
                   if (snapshot.hasData) {
                     // Đã đăng nhập
+                    WidgetsBinding.instance.addPostFrameCallback((_) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('🎉 Chào mừng bạn quay trở lại với Dume! Quản lý chi tiêu cho đàng hoàng nha :)))'),
+                          duration: Duration(seconds: 3),
+                          backgroundColor: Colors.green,
+                        ),
+                      );
+                    });
                     return const MainPage();
                   }
                   // Chưa đăng nhập

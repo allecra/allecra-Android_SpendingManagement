@@ -84,7 +84,9 @@ class _AnalyticPageState extends State<AnalyticPage>
 
       if (firstDayOfWeek.isBefore(date) && lastDayOfWeek.isAfter(date) ||
           isSameDay(firstDayOfWeek, date) ||
-          isSameDay(lastDayOfWeek, date)) return true;
+          isSameDay(lastDayOfWeek, date)) {
+        return true;
+      }
     } else if (_tabController.index == 1 && isSameMonth(date, now)) {
       return true;
     } else if (_tabController.index == 2 && date.year == now.year) {

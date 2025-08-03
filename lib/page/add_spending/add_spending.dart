@@ -55,7 +55,7 @@ class _AddSpendingPageState extends State<AddSpendingPage> {
     return Scaffold(
       appBar: AppBar(
         elevation: 1,
-        backgroundColor: Theme.of(context).colorScheme.background,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         title: Text(AppLocalizations.of(context).translate('add_spending')),
         centerTitle: true,
         actions: [
@@ -293,41 +293,91 @@ class _AddSpendingPageState extends State<AddSpendingPage> {
 
   Future addingSpending() async {
     String moneyString = _money.text.replaceAll(RegExp(r'[^0-9]'), '');
-    if (type != null &&
-        moneyString.isNotEmpty &&
-        moneyString.compareTo("0") != 0) {
-      int money = int.parse(moneyString);
-      Spending spending = Spending(
-        money: type == 41
-            ? coefficient * money
-            : ([29, 30, 34, 36, 37, 40].contains(type!) ? 1 : -1) * money,
-        type: type!,
-        typeName: typeName != null ? typeName!.trim() : typeName,
-        dateTime: DateTime(
-          selectedDate.year,
-          selectedDate.month,
-          selectedDate.day,
-          selectedTime.hour,
-          selectedTime.minute,
+    
+    // Validation chi tiết
+    if (type == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(AppLocalizations.of(context).translate('please_select_type')),
+          backgroundColor: Colors.red,
         ),
-        note: _note.text.trim(),
-        image: image != null ? image!.path : null,
-        location: _location.text.trim(),
-        friends: friends,
       );
-      loadingAnimation(context);
-      await SpendingFirebase.addSpending(spending);
-      if (!mounted) return;
-      Navigator.pop(context);
-      Navigator.pop(context);
-    } else if (type == null) {
-      Fluttertoast.showToast(
-          msg: AppLocalizations.of(context).translate('please_select_type'));
-    } else {
-      Fluttertoast.showToast(
-        msg:
-            AppLocalizations.of(context).translate('please_enter_valid_amount'),
-      );
+      return;
     }
+    
+    if (moneyString.isEmpty || moneyString.compareTo("0") == 0) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(AppLocalizations.of(context).translate('please_enter_valid_amount')),
+          backgroundColor: Colors.red,
+        ),
+      );
+      return;
+    }
+    
+    int money = int.parse(moneyString);
+    if (money > 1000000000) { // Giới hạn 1 tỷ
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Số tiền không được vượt quá 1 tỷ đồng'),
+          backgroundColor: Colors.red,
+        ),
+      );
+      return;
+    }
+    
+    if (_note.text.trim().length > 200) { // Giới hạn 200 ký tự
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Ghi chú không được vượt quá 200 ký tự'),
+          backgroundColor: Colors.red,
+        ),
+      );
+      return;
+    }
+    
+    if (selectedDate.isAfter(DateTime.now().add(const Duration(days: 1)))) { // Không cho phép chọn ngày trong tương lai
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Không thể chọn ngày trong tương lai'),
+          backgroundColor: Colors.red,
+        ),
+      );
+      return;
+    }
+    
+    Spending spending = Spending(
+      money: type == 41
+          ? coefficient * money
+          : ([29, 30, 34, 36, 37, 40].contains(type!) ? 1 : -1) * money,
+      type: type!,
+      typeName: typeName != null ? typeName!.trim() : typeName,
+      dateTime: DateTime(
+        selectedDate.year,
+        selectedDate.month,
+        selectedDate.day,
+        selectedTime.hour,
+        selectedTime.minute,
+      ),
+      note: _note.text.trim(),
+      image: image?.path,
+      location: _location.text.trim(),
+      friends: friends,
+    );
+    loadingAnimation(context);
+    await SpendingFirebase.addSpending(spending);
+    if (!mounted) return;
+    Navigator.pop(context);
+    Navigator.pop(context);
+    print('DEBUG: Thêm chi tiêu thành công, hiện thông báo');
+    print('DEBUG: Context mounted: ${mounted}');
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(AppLocalizations.of(context).translate('add_spending_success') ?? 'Thêm chi tiêu thành công!'),
+        duration: const Duration(seconds: 2),
+        backgroundColor: Colors.green,
+      ),
+    );
+    print('DEBUG: Đã hiện SnackBar thêm chi tiêu');
   }
 }

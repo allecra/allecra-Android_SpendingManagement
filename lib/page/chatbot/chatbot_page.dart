@@ -8,6 +8,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../../models/spending.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:developer';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class ChatBotPage extends StatefulWidget {
   const ChatBotPage({Key? key}) : super(key: key);
@@ -93,6 +94,11 @@ class _ChatBotPageState extends State<ChatBotPage> {
           text: content.trim(),
         );
         _addMessage(botMessage);
+        Fluttertoast.showToast(
+          msg: 'Đã gửi tin nhắn thành công!',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.TOP,
+        );
       } else {
         final botMessage = types.TextMessage(
           author: _bot,

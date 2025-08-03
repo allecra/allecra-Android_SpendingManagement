@@ -11,6 +11,8 @@ import 'package:spending_management/page/main/home/home_page.dart';
 import 'package:spending_management/page/main/profile/profile_page.dart';
 import 'package:spending_management/page/main/widget/item_bottom_tab.dart';
 import 'package:spending_management/page/chatbot/chatbot_page.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:spending_management/page/main/analytic/search_page.dart';
 
 import '../../setting/localization/app_localizations.dart';
 
@@ -69,65 +71,68 @@ class _MainPageState extends State<MainPage> {
             notchMargin: 10,
             child: SizedBox(
               height: 60,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      itemBottomTab(
-                        text: AppLocalizations.of(context).translate('home'),
-                        index: 0,
-                        current: currentTab,
-                        icon: FontAwesomeIcons.house,
-                        action: () {
-                          setState(() {
-                            currentTab = 0;
-                          });
-                        },
-                      ),
-                      itemBottomTab(
-                        text: AppLocalizations.of(context).translate('calendar'),
-                        index: 1,
-                        current: currentTab,
-                        size: 28,
-                        icon: Icons.calendar_month_outlined,
-                        action: () {
-                          setState(() {
-                            currentTab = 1;
-                          });
-                        },
-                      ),
-                    ],
-                  ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      itemBottomTab(
-                        text: AppLocalizations.of(context).translate('analytic'),
-                        index: 2,
-                        current: currentTab,
-                        icon: FontAwesomeIcons.chartPie,
-                        action: () {
-                          setState(() {
-                            currentTab = 2;
-                          });
-                        },
-                      ),
-                      itemBottomTab(
-                        text: AppLocalizations.of(context).translate('account'),
-                        index: 3,
-                        current: currentTab,
-                        icon: currentTab == 3
-                            ? FontAwesomeIcons.userLarge
-                            : FontAwesomeIcons.user,
-                        action: () {
-                          setState(() => currentTab = 3);
-                        },
-                      ),
-                    ],
-                  ),
-                ],
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        itemBottomTab(
+                          text: AppLocalizations.of(context).translate('home'),
+                          index: 0,
+                          current: currentTab,
+                          icon: FontAwesomeIcons.house,
+                          action: () {
+                            setState(() {
+                              currentTab = 0;
+                            });
+                          },
+                        ),
+                        itemBottomTab(
+                          text: AppLocalizations.of(context).translate('calendar'),
+                          index: 1,
+                          current: currentTab,
+                          size: 28,
+                          icon: Icons.calendar_month_outlined,
+                          action: () {
+                            setState(() {
+                              currentTab = 1;
+                            });
+                          },
+                        ),
+                      ],
+                    ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        itemBottomTab(
+                          text: AppLocalizations.of(context).translate('analytic'),
+                          index: 2,
+                          current: currentTab,
+                          icon: FontAwesomeIcons.chartPie,
+                          action: () {
+                            setState(() {
+                              currentTab = 2;
+                            });
+                          },
+                        ),
+                        itemBottomTab(
+                          text: AppLocalizations.of(context).translate('account'),
+                          index: 3,
+                          current: currentTab,
+                          icon: currentTab == 3
+                              ? FontAwesomeIcons.userLarge
+                              : FontAwesomeIcons.user,
+                          action: () {
+                            setState(() => currentTab = 3);
+                          },
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

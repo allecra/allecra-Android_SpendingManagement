@@ -156,8 +156,8 @@ class ColumnChartState extends State<ColumnChart> {
       ),
       titlesData: FlTitlesData(
         show: true,
-        rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
-        topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+        rightTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+        topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
         leftTitles: AxisTitles(
           sideTitles: SideTitles(
             showTitles: true,
@@ -175,7 +175,7 @@ class ColumnChartState extends State<ColumnChart> {
       ),
       borderData: FlBorderData(show: false),
       barGroups: showingGroups(),
-      gridData: FlGridData(show: true),
+      gridData: const FlGridData(show: true),
     );
   }
 

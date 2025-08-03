@@ -15,7 +15,7 @@ class MoreButton extends StatelessWidget {
         action();
       },
       style: ButtonStyle(
-        overlayColor: MaterialStateProperty.all(Colors.transparent),
+        overlayColor: WidgetStateProperty.all(Colors.transparent),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,

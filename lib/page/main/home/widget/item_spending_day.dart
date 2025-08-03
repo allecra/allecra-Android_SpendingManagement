@@ -11,6 +11,8 @@ import '../../../../setting/bloc/setting_cubit.dart';
 import '../../../../setting/bloc/setting_state.dart';
 import '../../../../setting/localization/app_localizations.dart';
 import '../../../view_spending/view_spending_page.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:spending_management/controls/spending_firebase.dart';
 
 class ItemSpendingDay extends StatefulWidget {
   const ItemSpendingDay({Key? key, required this.spendingList})
@@ -142,11 +144,41 @@ class _ItemSpendingDayState extends State<ItemSpendingDay> {
                         widget.spendingList.add(spending);
                       });
                     },
-                    delete: (id) {
-                      setState(() {
-                        widget.spendingList.removeWhere(
-                            (element) => element.id!.compareTo(id) == 0);
-                      });
+                    delete: (id) async {
+                      try {
+                        final spending = widget.spendingList.firstWhere(
+                            (element) => element.id == id);
+                        
+                        // Xóa từ database trước
+                        await SpendingFirebase.deleteSpending(spending);
+                        
+                        // Nếu xóa database thành công, mới xóa khỏi list
+                        setState(() {
+                          widget.spendingList.removeWhere(
+                              (element) => element.id!.compareTo(id) == 0);
+                        });
+                        
+                        if (!mounted) return;
+                        Navigator.pop(context);
+                        
+                        // Hiện thông báo thành công
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(AppLocalizations.of(context).translate('delete_spending_success') ?? 'Xóa chi tiêu thành công!'),
+                            duration: const Duration(seconds: 2),
+                            backgroundColor: Colors.red,
+                          ),
+                        );
+                      } catch (e) {
+                        print('DEBUG: Lỗi khi xóa chi tiêu: $e');
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: const Text('Lỗi khi xóa chi tiêu'),
+                            duration: const Duration(seconds: 2),
+                            backgroundColor: Colors.red,
+                          ),
+                        );
+                      }
                     },
                   ),
                 ),

@@ -177,7 +177,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       icon: Icons.archive_outlined,
                       color: const Color.fromRGBO(137, 207, 240, 1),
                     ),
-                    const SizedBox(height: 20),
+                    /*const SizedBox(height: 20),
                     settingItem(
                       text: AppLocalizations.of(context)
                           .translate('currency_exchange_rate'),
@@ -189,7 +189,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       },
                       icon: Icons.attach_money_rounded,
                       color: const Color.fromRGBO(255, 192, 0, 1),
-                    ),
+                    ),*/
                     const SizedBox(height: 20),
                     settingItem(
                       text: AppLocalizations.of(context).translate('about'),

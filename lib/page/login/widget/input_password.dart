@@ -48,7 +48,7 @@ class InputPassword extends StatelessWidget {
         ),
         hintStyle: AppStyles.p,
         filled: true,
-        fillColor: Theme.of(context).colorScheme.background,
+        fillColor: Theme.of(context).colorScheme.surface,
         hintText: hint,
         errorText: error,
         suffixIcon: IconButton(

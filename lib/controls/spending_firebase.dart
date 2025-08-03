@@ -16,6 +16,7 @@ class SpendingFirebase {
         .collection("data")
         .doc(FirebaseAuth.instance.currentUser!.uid);
 
+    //lấy ảnh ở đây nè
     if (spending.image != null) {
       spending.image = await uploadImage(
           folder: "spending",

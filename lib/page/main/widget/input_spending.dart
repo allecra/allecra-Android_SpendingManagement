@@ -6,6 +6,7 @@ import 'package:spending_management/constants/function/list_categories.dart';
 import 'package:spending_management/controls/spending_firebase.dart';
 import 'package:spending_management/models/spending.dart';
 import 'package:spending_management/setting/localization/app_localizations.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class InputSpending extends StatefulWidget {
   const InputSpending({Key? key}) : super(key: key);
@@ -296,6 +297,11 @@ class _InputSpendingState extends State<InputSpending> {
                     );
                     if (!mounted) return;
                     Navigator.pop(context);
+                    Fluttertoast.showToast(
+                      msg: AppLocalizations.of(context).translate('add_spending_success') ?? 'Thêm chi tiêu thành công!',
+                      toastLength: Toast.LENGTH_SHORT,
+                      gravity: ToastGravity.TOP,
+                    );
                   }
                 },
                 child: Text(AppLocalizations.of(context).translate('save')),

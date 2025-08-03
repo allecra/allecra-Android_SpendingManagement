@@ -23,13 +23,19 @@ Widget itemBottomTab({
               : Colors.grey,
           size: size,
         ),
-        const SizedBox(height: 5),
-        Text(
-          text,
-          style: TextStyle(
-            color: current == index
-                ? const Color.fromRGBO(173, 149, 121, 1)
-                : Colors.grey,
+        const SizedBox(height: 2),
+        Flexible(
+          child: Text(
+            text,
+            style: TextStyle(
+              color: current == index
+                  ? const Color.fromRGBO(173, 149, 121, 1)
+                  : Colors.grey,
+              fontSize: 10,
+            ),
+            overflow: TextOverflow.ellipsis,
+            maxLines: 1,
+            textAlign: TextAlign.center,
           ),
         )
       ],
